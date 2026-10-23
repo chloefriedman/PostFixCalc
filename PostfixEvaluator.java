@@ -12,6 +12,56 @@ public class PostfixEvaluator {
     public static int evaluate(String expression) {
         BoundedStackInterface<Integer> stack = new ArrayStack<>(100);
         Scanner tokens = new Scanner(expression);
+        String a = tokens.next();
+        String[] items = a.split(" ");
+        if(items[0].equals("/") || items[0].equals("*") || items[0].equals("+") || items[0].equals("-"))
+        {
+            throw new PostFixException("Malformed equation");
+        }
+        else if(items[1].equals("/") || items[1].equals("*") || items[1].equals("+") || items[1].equals("-"))
+        {
+            throw new PostFixException("Malformed equation");
+         }
+         if(items.length < 3)
+         {
+            throw new PostFixException("Malformed equation");
+         }
+        for(int i = 0; i < items.length; i++)
+        {
+            String current = items[i];
+            if(!(current.equals("/") || current.equals("*") || current.equals("+") || current.equals("-")))
+            {
+                int num = Integer.parseInt(current);
+                stack.push(num);
+            }
+            else
+            {
+               try
+               {
+                   int num2 = stack.top();
+                   stack.pop();
+                   int num1 = stack.top();
+                   stack.pop();
+                   if(current.equals("+"))
+                   {
+                        stack.push(num1+num2);
+                   }
+                   else if(current.equals("-"))
+                   {
+                        stack.push(num1 - num2);
+                   }
+                   else if(current.equals("*"))
+                   {
+                        
+                   }
+               }
+               catch(StackUnderflowException e)
+               {
+
+               }
+            }
+          
+        }
 
         // TODO 1: Process tokens one at a time.
         // TODO 2: If a token is an integer, push it onto the stack.
