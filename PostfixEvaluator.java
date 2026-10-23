@@ -1,3 +1,4 @@
+import java.nio.charset.MalformedInputException;
 import java.util.Scanner;
 
 /** STUDENT FILE: Complete evaluate. Leave all other project files unchanged. */
@@ -52,15 +53,30 @@ public class PostfixEvaluator {
                    }
                    else if(current.equals("*"))
                    {
-                        
+                        stack.push(num1 * num2);
                    }
+                   else if(current.equals("/"))
+                   {
+                        if(num2 == 0)
+                        {
+                            throw new ArithmeticException("Can't divide by 0");
+                        }
+                        else
+                        {
+                            stack.push(num1/num2);
+                        }
+                   }
+
                }
                catch(StackUnderflowException e)
                {
-
                }
             }
           
+        }
+        if(!stack.isEmpty())
+        {
+            throw new PostFixException("Malformed equation");
         }
 
         // TODO 1: Process tokens one at a time.
