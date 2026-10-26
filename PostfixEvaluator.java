@@ -27,7 +27,7 @@ public class PostfixEvaluator {
          {
             throw new PostFixException("Malformed equation");
          }
-        if(items[0].equals("/") || items[0].equals("*") || items[0].equals("+") || items[0].equals("-"))
+        if(items[0].equals("/") || items[0].equals("*") || items[0].equals("+"))
         {
             throw new PostFixException("Malformed equation");
         }
@@ -39,7 +39,13 @@ public class PostfixEvaluator {
         for(int i = 0; i < items.length; i++)
         {
             String current = items[i];
-            if(!(current.equals("/") || current.equals("*") || current.equals("+") || current.equals("-")))
+            if(i == 0 && current.equals("-"))
+            {
+                int num = Integer.parseInt(items[1]);
+                stack.push((num * -1));
+                i++;
+            }
+            else if(!(current.equals("/") || current.equals("*") || current.equals("+") || current.equals("-")))
             {
                 int num = Integer.parseInt(current);
                 stack.push(num);
@@ -72,7 +78,7 @@ public class PostfixEvaluator {
                         }
                         else
                         {
-                            stack.push(num1/num2);
+                            stack.push((int)(num1/num2));
                         }
                    }
 
